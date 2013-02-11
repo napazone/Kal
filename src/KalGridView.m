@@ -111,6 +111,15 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
   if ([hitView isKindOfClass:[KalTileView class]]) {
     KalTileView *tile = (KalTileView*)hitView;
+    if (tile.date == nil) {
+      // It's needed because Month grid has 7x6 tiles. But it is possible that only 7x5 is visible now.
+      // But as the height of month grid is `1.f + kTileSize.height * numWeeks` than it is possible to tap
+      // on the last pixel on bottom and `hitTest:withEvent:` will return tile from invisible tile rows and
+      // it will be without date.
+      // `+1` the height calculation is needed for adding nice gray line at the bottom. It was added here:
+      // https://github.com/klazuka/Kal/commit/f42d043fb3d2a34c5913aea9b18e41cfb463ef32#L1R131
+      return;
+    }
     if (tile.belongsToAdjacentMonth) {
       self.highlightedTile = tile;
     } else {
