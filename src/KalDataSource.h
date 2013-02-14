@@ -74,7 +74,7 @@
 
 @protocol KalDataSource <NSObject, UITableViewDataSource>
 - (void)presentingDatesFrom:(NSDate *)fromDate to:(NSDate *)toDate delegate:(id<KalDataSourceCallbacks>)delegate;
-- (NSSet *)markedDatesFrom:(NSDate *)fromDate to:(NSDate *)toDate speciallyMarkedDates:(NSSet **)speciallyMarkedDates;
+- (NSSet *)markedDatesFrom:(NSDate *)fromDate to:(NSDate *)toDate speciallyMarkedDates:(NSSet * __autoreleasing *)speciallyMarkedDates;
 - (void)loadItemsFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
 - (void)removeAllItems;
 @end
