@@ -46,8 +46,14 @@ extern const CGSize kTileSize;
       tile.type = dates[i] != mainDates
                     ? KalTileTypeAdjacent
                     : [d isToday] ? KalTileTypeToday : KalTileTypeRegular;
+      tile.hidden = NO;
       tileNum++;
     }
+  }
+  // hide remaining tiles if exist
+  for (int i = tileNum; i < self.subviews.count; i++) {
+    KalTileView *tile = [self.subviews objectAtIndex:i];
+    tile.hidden = YES;
   }
   
   numWeeks = ceilf(tileNum / 7.f);
