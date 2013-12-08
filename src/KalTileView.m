@@ -30,9 +30,8 @@ extern const CGSize kTileSize;
 - (void)drawRect:(CGRect)rect
 {
   CGContextRef ctx = UIGraphicsGetCurrentContext();
-  CGFloat fontSize = 24.f;
-  UIFont *font = [UIFont boldSystemFontOfSize:fontSize];
-  UIColor *shadowColor = nil;
+  CGFloat fontSize = 21.f;
+  UIFont *font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:fontSize];
   UIColor *textColor = nil;
   UIImage *markerImage = nil;
   UIImage *specialMarkerImage = nil;
@@ -40,48 +39,51 @@ extern const CGSize kTileSize;
       
   CGContextTranslateCTM(ctx, 0, kTileSize.height);
   CGContextScaleCTM(ctx, 1, -1);
+
+  BOOL isRetina = ([UIScreen mainScreen].scale == 2.0);
   
   if ([self isToday] && self.selected) {
-    [[[UIImage imageNamed:@"Kal.bundle/kal_tile_today_selected.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] drawInRect:CGRectMake(0, -1, kTileSize.width+1, kTileSize.height+1)];
-    textColor = [UIColor whiteColor];
-    shadowColor = [UIColor blackColor];
+    [self drawBackgroundImage:[[UIImage imageNamed:@"Kal.bundle/kal_tile_today_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_text_fill.png"]];
     markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_today.png"];
     specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_today.png"];
   } else if ([self isToday] && !self.selected) {
-    [[[UIImage imageNamed:@"Kal.bundle/kal_tile_today.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] drawInRect:CGRectMake(0, -1, kTileSize.width+1, kTileSize.height+1)];
-    textColor = [UIColor whiteColor];
-    shadowColor = [UIColor blackColor];
+    [self drawBackgroundImage:[[UIImage imageNamed:@"Kal.bundle/kal_tile_today.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    textColor = [UIColor colorWithRed:0.271 green:0.655 blue:0.616 alpha:1];
     markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_today.png"];
     specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_today.png"];
   } else if (self.selected) {
-    [[[UIImage imageNamed:@"Kal.bundle/kal_tile_selected.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:0] drawInRect:CGRectMake(0, -1, kTileSize.width+1, kTileSize.height+1)];
-    textColor = [UIColor whiteColor];
-    shadowColor = [UIColor blackColor];
+    [self drawBackgroundImage:[[UIImage imageNamed:@"Kal.bundle/kal_tile_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_text_fill.png"]];
     markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_selected.png"];
     specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_selected.png"];
   } else if (self.belongsToAdjacentMonth) {
     textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_dim_text_fill.png"]];
-    shadowColor = nil;
     markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_dim.png"];
     specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_dim.png"];
   } else {
     textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_text_fill.png"]];
-    shadowColor = [UIColor whiteColor];
     markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker.png"];
     specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker.png"];
   }
-  
+
+  // We need to offset tile content to compensate for the workaround used in setSelected: (see below)
+  BOOL horizontalOffset = 1.0f;
+  if (![self isToday] && !self.selected) {
+    horizontalOffset = 0.0f;
+  }
+
   if (flags.marked) {
     if (flags.speciallyMarked) {
-      [markerImage drawInRect:CGRectMake(17.f, 5.f, 4.f, 5.f)];
-      [specialMarkerImage drawInRect:CGRectMake(25.f, 5.f, 4.f, 5.f)];
+      [markerImage drawInRect:CGRectMake(17.f + horizontalOffset, 5.f, 6.f, 7.f)];
+      [specialMarkerImage drawInRect:CGRectMake(25.f + horizontalOffset, 5.f, 6.f, 7.f)];
     }
     else {
-      [markerImage drawInRect:CGRectMake(21.f, 5.f, 4.f, 5.f)];
+      [markerImage drawInRect:CGRectMake((isRetina ? 20.5f : 21.f) + horizontalOffset, 5.f, 6.f, 7.f)];
     }
   }
   else if (flags.speciallyMarked) {
-    [specialMarkerImage drawInRect:CGRectMake(21.f, 5.f, 4.f, 5.f)];
+    [specialMarkerImage drawInRect:CGRectMake((isRetina ? 20.5f : 21.f) + horizontalOffset, 5.f, 6.f, 7.f)];
   }
   
   NSUInteger n = [self.date day];
@@ -89,19 +91,23 @@ extern const CGSize kTileSize;
   const char *day = [dayText cStringUsingEncoding:NSUTF8StringEncoding];
   CGSize textSize = [dayText sizeWithFont:font];
   CGFloat textX, textY;
-  textX = roundf(0.5f * (kTileSize.width - textSize.width));
-  textY = 6.f + roundf(0.5f * (kTileSize.height - textSize.height));
-  if (shadowColor) {
-    [shadowColor setFill];
-    CGContextShowTextAtPoint(ctx, textX, textY, day, n >= 10 ? 2 : 1);
-    textY += 1.f;
-  }
+  textX = roundf(0.5f * (kTileSize.width - textSize.width)) + horizontalOffset;
+  textY = 10.f + roundf(0.5f * (kTileSize.height - textSize.height));
   [textColor setFill];
   CGContextShowTextAtPoint(ctx, textX, textY, day, n >= 10 ? 2 : 1);
   
   if (self.highlighted) {
     [[UIColor colorWithWhite:0.25f alpha:0.3f] setFill];
     CGContextFillRect(ctx, CGRectMake(0.f, 0.f, kTileSize.width, kTileSize.height));
+  }
+}
+
+- (void)drawBackgroundImage:(UIImage*)image {
+  if ([UIScreen mainScreen].scale == 2.0) {
+    [image drawInRect:CGRectMake(0.5, -0.5, kTileSize.width+0.5, kTileSize.height+0.5)];
+  }
+  else {
+    [image drawInRect:CGRectMake(0, -1, kTileSize.width+1, kTileSize.height+1)];
   }
 }
 

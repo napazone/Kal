@@ -103,7 +103,7 @@ static const CGFloat kMonthLabelHeight = 17.f;
                                       kMonthLabelHeight);
   headerTitleLabel = [[UILabel alloc] initWithFrame:monthLabelFrame];
   headerTitleLabel.backgroundColor = [UIColor clearColor];
-  headerTitleLabel.font = [UIFont boldSystemFontOfSize:22.f];
+  headerTitleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:22];
   headerTitleLabel.textAlignment = UITextAlignmentCenter;
   headerTitleLabel.textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_header_text_fill.png"]];
   headerTitleLabel.shadowColor = [UIColor whiteColor];
@@ -124,9 +124,9 @@ static const CGFloat kMonthLabelHeight = 17.f;
   [nextMonthButton addTarget:self action:@selector(showFollowingMonth) forControlEvents:UIControlEventTouchUpInside];
   [headerView addSubview:nextMonthButton];
   [nextMonthButton release];
-  
+
   // Add column labels for each weekday (adjusting based on the current locale's first weekday)
-  NSArray *weekdayNames = [[[[NSDateFormatter alloc] init] autorelease] shortWeekdaySymbols];
+  NSArray *weekdayNames = [[[[NSDateFormatter alloc] init] autorelease] veryShortWeekdaySymbols];
   NSArray *fullWeekdayNames = [[[[NSDateFormatter alloc] init] autorelease] standaloneWeekdaySymbols];
   NSUInteger firstWeekday = [[NSCalendar currentCalendar] firstWeekday];
   NSUInteger i = firstWeekday - 1;
@@ -134,11 +134,9 @@ static const CGFloat kMonthLabelHeight = 17.f;
     CGRect weekdayFrame = CGRectMake(xOffset, 30.f, 46.f, kHeaderHeight - 29.f);
     UILabel *weekdayLabel = [[UILabel alloc] initWithFrame:weekdayFrame];
     weekdayLabel.backgroundColor = [UIColor clearColor];
-    weekdayLabel.font = [UIFont boldSystemFontOfSize:10.f];
+    weekdayLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:10];
     weekdayLabel.textAlignment = UITextAlignmentCenter;
-    weekdayLabel.textColor = [UIColor colorWithRed:0.3f green:0.3f blue:0.3f alpha:1.f];
-    weekdayLabel.shadowColor = [UIColor whiteColor];
-    weekdayLabel.shadowOffset = CGSizeMake(0.f, 1.f);
+    weekdayLabel.textColor = headerTitleLabel.textColor;
     weekdayLabel.text = [weekdayNames objectAtIndex:i];
     [weekdayLabel setAccessibilityLabel:[fullWeekdayNames objectAtIndex:i]];
     [headerView addSubview:weekdayLabel];
