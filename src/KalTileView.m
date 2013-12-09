@@ -40,8 +40,6 @@ extern const CGSize kTileSize;
   CGContextTranslateCTM(ctx, 0, kTileSize.height);
   CGContextScaleCTM(ctx, 1, -1);
 
-  BOOL isRetina = ([UIScreen mainScreen].scale == 2.0);
-  
   if ([self isToday] && self.selected) {
     [self drawBackgroundImage:[[UIImage imageNamed:@"Kal.bundle/kal_tile_today_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
     textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_text_fill.png"]];
@@ -75,15 +73,15 @@ extern const CGSize kTileSize;
 
   if (flags.marked) {
     if (flags.speciallyMarked) {
-      [markerImage drawInRect:CGRectMake(17.f + horizontalOffset, 5.f, 6.f, 7.f)];
-      [specialMarkerImage drawInRect:CGRectMake(25.f + horizontalOffset, 5.f, 6.f, 7.f)];
+      [markerImage drawInRect:CGRectMake(16.f + horizontalOffset, 5.f, 6.f, 7.f)];
+      [specialMarkerImage drawInRect:CGRectMake(24.f + horizontalOffset, 5.f, 6.f, 7.f)];
     }
     else {
-      [markerImage drawInRect:CGRectMake((isRetina ? 20.5f : 21.f) + horizontalOffset, 5.f, 6.f, 7.f)];
+      [markerImage drawInRect:CGRectMake(20.f + horizontalOffset, 5.f, 6.f, 7.f)];
     }
   }
   else if (flags.speciallyMarked) {
-    [specialMarkerImage drawInRect:CGRectMake((isRetina ? 20.5f : 21.f) + horizontalOffset, 5.f, 6.f, 7.f)];
+    [specialMarkerImage drawInRect:CGRectMake(20.f + horizontalOffset, 5.f, 6.f, 7.f)];
   }
   
   NSUInteger n = [self.date day];
