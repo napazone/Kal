@@ -54,6 +54,7 @@
 - (id)initWithFrame:(CGRect)frame delegate:(id<KalViewDelegate>)delegate logic:(KalLogic *)logic;
 - (BOOL)isSliding;
 - (void)selectDate:(KalDate *)date;
+- (void)animateSelectedTile;
 - (void)markTilesForDates:(NSSet *)dates specialDates:(NSSet *)specialDates;
 - (void)redrawEntireMonth;
 

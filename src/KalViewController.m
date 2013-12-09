@@ -150,6 +150,8 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
   start = mach_absolute_time();
 #endif
 
+  KalDate *originalSelectedDate = [self calendarView].selectedDate;
+
   [[self calendarView] jumpToSelectedMonth];
 
 #if PROFILER
@@ -160,6 +162,11 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 
   [[self calendarView] selectDate:[KalDate dateFromNSDate:date]];
   [self reloadData];
+
+  KalDate *today = [KalDate dateFromNSDate:[NSDate date]];
+  if ([originalSelectedDate compare:today] == NSOrderedSame) {
+    [self.calendarView animateSelectedTile];
+  }
 }
 
 - (NSDate *)selectedDate
