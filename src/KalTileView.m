@@ -7,7 +7,7 @@
 #import "KalDate.h"
 #import "KalPrivate.h"
 
-extern const CGSize kTileSize;
+extern CGSize kalTileSize();
 
 @implementation KalTileView
 
@@ -37,7 +37,7 @@ extern const CGSize kTileSize;
   UIImage *specialMarkerImage = nil;
   CGContextSelectFont(ctx, [font.fontName cStringUsingEncoding:NSUTF8StringEncoding], fontSize, kCGEncodingMacRoman);
       
-  CGContextTranslateCTM(ctx, 0, kTileSize.height);
+  CGContextTranslateCTM(ctx, 0, kalTileSize().height);
   CGContextScaleCTM(ctx, 1, -1);
 
   if ([self isToday] && self.selected) {
@@ -71,17 +71,22 @@ extern const CGSize kTileSize;
     horizontalOffset = 0.0f;
   }
 
+  CGFloat x = (kalTileSize().width - 6.0) / 2.0;
+  if ([UIScreen mainScreen].scale == 1.0) {
+    x = roundf(x);
+  }
+
   if (flags.marked) {
     if (flags.speciallyMarked) {
-      [markerImage drawInRect:CGRectMake(16.f + horizontalOffset, 5.f, 6.f, 7.f)];
-      [specialMarkerImage drawInRect:CGRectMake(24.f + horizontalOffset, 5.f, 6.f, 7.f)];
+      [markerImage drawInRect:CGRectMake(x - 4 + horizontalOffset, 5.f, 6.f, 7.f)];
+      [specialMarkerImage drawInRect:CGRectMake(x + 4 + horizontalOffset, 5.f, 6.f, 7.f)];
     }
     else {
-      [markerImage drawInRect:CGRectMake(20.f + horizontalOffset, 5.f, 6.f, 7.f)];
+      [markerImage drawInRect:CGRectMake(x + horizontalOffset, 5.f, 6.f, 7.f)];
     }
   }
   else if (flags.speciallyMarked) {
-    [specialMarkerImage drawInRect:CGRectMake(20.f + horizontalOffset, 5.f, 6.f, 7.f)];
+    [specialMarkerImage drawInRect:CGRectMake(x + horizontalOffset, 5.f, 6.f, 7.f)];
   }
   
   NSUInteger n = [self.date day];
@@ -89,23 +94,23 @@ extern const CGSize kTileSize;
   const char *day = [dayText cStringUsingEncoding:NSUTF8StringEncoding];
   CGSize textSize = [dayText sizeWithFont:font];
   CGFloat textX, textY;
-  textX = roundf(0.5f * (kTileSize.width - textSize.width)) + horizontalOffset;
-  textY = 10.f + roundf(0.5f * (kTileSize.height - textSize.height));
+  textX = roundf(0.5f * (kalTileSize().width - textSize.width)) + horizontalOffset;
+  textY = 10.f + roundf(0.5f * (kalTileSize().height - textSize.height));
   [textColor setFill];
   CGContextShowTextAtPoint(ctx, textX, textY, day, n >= 10 ? 2 : 1);
   
   if (self.highlighted) {
     [[UIColor colorWithWhite:0.25f alpha:0.3f] setFill];
-    CGContextFillRect(ctx, CGRectMake(0.f, 0.f, kTileSize.width, kTileSize.height));
+    CGContextFillRect(ctx, CGRectMake(0.f, 0.f, kalTileSize().width, kalTileSize().height));
   }
 }
 
 - (void)drawBackgroundImage:(UIImage*)image {
   if ([UIScreen mainScreen].scale == 2.0) {
-    [image drawInRect:CGRectMake(0.5, -0.5, kTileSize.width+0.5, kTileSize.height+0.5)];
+    [image drawInRect:CGRectMake(0.5, -0.5, kalTileSize().width+0.5, kalTileSize().height+0.5)];
   }
   else {
-    [image drawInRect:CGRectMake(0, -1, kTileSize.width+1, kTileSize.height+1)];
+    [image drawInRect:CGRectMake(0, -1, kalTileSize().width+1, kalTileSize().height+1)];
   }
 }
 
@@ -114,7 +119,7 @@ extern const CGSize kTileSize;
   // realign to the grid
   CGRect frame = self.frame;
   frame.origin = origin;
-  frame.size = kTileSize;
+  frame.size = kalTileSize();
   self.frame = frame;
   
   [date release];

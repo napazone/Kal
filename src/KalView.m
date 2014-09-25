@@ -17,6 +17,8 @@
 static const CGFloat kHeaderHeight = 44.f;
 static const CGFloat kMonthLabelHeight = 17.f;
 
+extern CGSize kalTileSize();
+
 @implementation KalView
 
 @synthesize delegate, tableView;
@@ -29,8 +31,15 @@ static const CGFloat kMonthLabelHeight = 17.f;
     [logic addObserver:self forKeyPath:@"selectedMonthNameAndYear" options:NSKeyValueObservingOptionNew context:NULL];
     self.autoresizesSubviews = YES;
     self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    
-    UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, frame.size.width, kHeaderHeight)] autorelease];
+
+    UIView *backgroundView = [[UIView alloc] initWithFrame:frame];
+    backgroundView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:backgroundView];
+
+    CGFloat contentWidth = kalTileSize().width * 7;
+    CGFloat contentX = (frame.size.width - contentWidth) / 2.0;
+
+    UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(contentX, 0.f, contentWidth, kHeaderHeight)] autorelease];
     headerView.backgroundColor = [UIColor grayColor];
     [self addSubviewsToHeaderView:headerView];
     [self addSubview:headerView];
@@ -117,7 +126,7 @@ static const CGFloat kMonthLabelHeight = 17.f;
   [headerView addSubview:headerTitleLabel];
   
   // Create the next month button on the right side of the view
-  CGRect nextMonthButtonFrame = CGRectMake(self.width - kChangeMonthButtonWidth,
+  CGRect nextMonthButtonFrame = CGRectMake(headerView.width - kChangeMonthButtonWidth,
                                            kHeaderVerticalAdjust,
                                            kChangeMonthButtonWidth,
                                            kChangeMonthButtonHeight);
@@ -135,8 +144,8 @@ static const CGFloat kMonthLabelHeight = 17.f;
   NSArray *fullWeekdayNames = [[[[NSDateFormatter alloc] init] autorelease] standaloneWeekdaySymbols];
   NSUInteger firstWeekday = [[NSCalendar currentCalendar] firstWeekday];
   NSUInteger i = firstWeekday - 1;
-  for (CGFloat xOffset = 0.f; xOffset < headerView.width; xOffset += 46.f, i = (i+1)%7) {
-    CGRect weekdayFrame = CGRectMake(xOffset, 30.f, 46.f, kHeaderHeight - 29.f);
+  for (CGFloat xOffset = 0.f; xOffset < headerView.width; xOffset += kalTileSize().width, i = (i+1)%7) {
+    CGRect weekdayFrame = CGRectMake(xOffset, 30.f, kalTileSize().width, kHeaderHeight - 29.f);
     UILabel *weekdayLabel = [[UILabel alloc] initWithFrame:weekdayFrame];
     weekdayLabel.backgroundColor = [UIColor clearColor];
     weekdayLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:10];
@@ -157,7 +166,10 @@ static const CGFloat kMonthLabelHeight = 17.f;
   CGRect fullWidthAutomaticLayoutFrame = CGRectMake(0.f, 0.f, self.width, 0.f);
 
   // The tile grid (the calendar body)
-  gridView = [[KalGridView alloc] initWithFrame:fullWidthAutomaticLayoutFrame logic:logic delegate:delegate];
+  CGFloat calendarWidth = kalTileSize().width * 7;
+  CGFloat calendarX = (contentView.frame.size.width - calendarWidth) / 2.0;
+
+  gridView = [[KalGridView alloc] initWithFrame:CGRectMake(calendarX, 0, calendarWidth, 0) logic:logic delegate:delegate];
   [gridView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
   [contentView addSubview:gridView];
 

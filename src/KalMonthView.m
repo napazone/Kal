@@ -10,7 +10,7 @@
 #import "KalDate.h"
 #import "KalPrivate.h"
 
-extern const CGSize kTileSize;
+extern CGSize kalTileSize();
 
 @implementation KalMonthView
 
@@ -25,7 +25,7 @@ extern const CGSize kTileSize;
     self.clipsToBounds = YES;
     for (int i=0; i<6; i++) {
       for (int j=0; j<7; j++) {
-        CGRect r = CGRectMake(j*kTileSize.width, i*kTileSize.height, kTileSize.width, kTileSize.height);
+        CGRect r = CGRectMake(j*kalTileSize().width, i*kalTileSize().height, kalTileSize().width, kalTileSize().height);
         [self addSubview:[[[KalTileView alloc] initWithFrame:r] autorelease]];
       }
     }
@@ -64,7 +64,7 @@ extern const CGSize kTileSize;
 - (void)drawRect:(CGRect)rect
 {
   CGContextRef ctx = UIGraphicsGetCurrentContext();
-  CGContextDrawTiledImage(ctx, (CGRect){CGPointZero,kTileSize}, [[UIImage imageNamed:@"Kal.bundle/kal_tile.png"] CGImage]);
+  CGContextDrawTiledImage(ctx, (CGRect){CGPointZero,kalTileSize()}, [[UIImage imageNamed:@"Kal.bundle/kal_tile.png"] CGImage]);
 }
 
 - (KalTileView *)firstTileOfMonth
@@ -96,7 +96,7 @@ extern const CGSize kTileSize;
 
 - (void)sizeToFit
 {
-  self.height = 1.f + kTileSize.height * numWeeks;
+  self.height = 1.f + kalTileSize().height * numWeeks;
 }
 
 - (void)markTilesForDates:(NSSet *)dates specialDates:(NSSet *)specialDates

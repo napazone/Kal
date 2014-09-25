@@ -17,7 +17,21 @@
 #define SLIDE_UP 1
 #define SLIDE_DOWN 2
 
-const CGSize kTileSize = { 46.f, 44.f };
+CGSize kalTileSize() {
+  CGSize screenSize = [UIScreen mainScreen].bounds.size;
+
+  // iPhone 6
+  if (screenSize.height == 667) {
+    return CGSizeMake(54 , 44);
+  }
+
+  // iPhone 6 Plus
+  if (screenSize.height == 736) {
+    return CGSizeMake(59.5, 50);
+  }
+
+  return CGSizeMake(46, 44);
+}
 
 static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
@@ -41,7 +55,7 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
   // to accomodate all 7 columns. The 7th day's 2px inner stroke
   // will be clipped off the screen, but that's fine because
   // MobileCal does the same thing.
-  frame.size.width = 7 * kTileSize.width;
+  frame.size.width = 7 * kalTileSize().width;
 
   if (self = [super initWithFrame:frame]) {
     self.clipsToBounds = YES;
@@ -157,12 +171,12 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
   // set initial positions before the slide
   if (direction == SLIDE_UP) {
     backMonthView.top = keepOneRow
-      ? frontMonthView.bottom - kTileSize.height
+      ? frontMonthView.bottom - kalTileSize().height
       : frontMonthView.bottom;
   } else if (direction == SLIDE_DOWN) {
     NSUInteger numWeeksToKeep = keepOneRow ? 1 : 0;
     NSInteger numWeeksToSlide = [backMonthView numWeeks] - numWeeksToKeep;
-    backMonthView.top = -numWeeksToSlide * kTileSize.height;
+    backMonthView.top = -numWeeksToSlide * kalTileSize().height;
   } else {
     backMonthView.top = 0.f;
   }
