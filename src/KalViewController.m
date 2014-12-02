@@ -194,7 +194,13 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
   CGFloat statusBarHeight = MIN(statusBarSize.width, statusBarSize.height);
 
   CGRect screenBounds = [[UIScreen mainScreen] bounds];
+
+  if (screenBounds.size.width > screenBounds.size.height) {
+    screenBounds = CGRectMake(0, 0, screenBounds.size.height, screenBounds.size.height);
+  }
+
   screenBounds.size.height -= statusBarHeight;
+
   KalView *kalView = [[[KalView alloc] initWithFrame:screenBounds delegate:self logic:logic] autorelease];
   self.view = kalView;
   tableView = kalView.tableView;

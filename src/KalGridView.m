@@ -19,14 +19,15 @@
 
 CGSize kalTileSize() {
   CGSize screenSize = [UIScreen mainScreen].bounds.size;
+  CGFloat height = MAX(screenSize.width, screenSize.height);
 
   // iPhone 6
-  if (screenSize.height == 667) {
+  if (height == 667) {
     return CGSizeMake(54 , 44);
   }
 
   // iPhone 6 Plus
-  if (screenSize.height == 736) {
+  if (height == 736) {
     return CGSizeMake(59.5, 50);
   }
 
