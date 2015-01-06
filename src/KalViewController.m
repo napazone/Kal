@@ -196,7 +196,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
   CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
   if (screenBounds.size.width > screenBounds.size.height) {
-    screenBounds = CGRectMake(0, 0, screenBounds.size.height, screenBounds.size.height);
+    screenBounds = CGRectMake(0, 0, screenBounds.size.height, screenBounds.size.width);
   }
 
   screenBounds.size.height -= statusBarHeight;
