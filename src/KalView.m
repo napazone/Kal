@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (c) 2009 Keith Lazuka
  * License: http://www.opensource.org/licenses/mit-license.html
  */
@@ -43,13 +43,13 @@ extern CGSize kalTileSize();
     headerView.backgroundColor = [UIColor grayColor];
     [self addSubviewsToHeaderView:headerView];
     [self addSubview:headerView];
-    
+
     UIView *contentView = [[[UIView alloc] initWithFrame:CGRectMake(0.f, kHeaderHeight, frame.size.width, frame.size.height - kHeaderHeight)] autorelease];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self addSubviewsToContentView:contentView];
     [self addSubview:contentView];
   }
-  
+
   return self;
 }
 
@@ -87,7 +87,7 @@ extern CGSize kalTileSize();
   const CGFloat kChangeMonthButtonHeight = 30.0f;
   const CGFloat kMonthLabelWidth = 200.0f;
   const CGFloat kHeaderVerticalAdjust = 3.f;
-  
+
   // Header background gradient
   UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Kal.bundle/kal_grid_background.png"]];
   CGRect imageFrame = headerView.frame;
@@ -95,7 +95,7 @@ extern CGSize kalTileSize();
   backgroundView.frame = imageFrame;
   [headerView addSubview:backgroundView];
   [backgroundView release];
-  
+
   // Create the previous month button on the left side of the view
   CGRect previousMonthButtonFrame = CGRectMake(self.left,
                                                kHeaderVerticalAdjust,
@@ -103,13 +103,13 @@ extern CGSize kalTileSize();
                                                kChangeMonthButtonHeight);
   UIButton *previousMonthButton = [[UIButton alloc] initWithFrame:previousMonthButtonFrame];
   [previousMonthButton setAccessibilityLabel:NSLocalizedString(@"Previous month", nil)];
-  [previousMonthButton setImage:[UIImage imageNamed:@"Kal.bundle/kal_left_arrow.png"] forState:UIControlStateNormal];
+  [previousMonthButton setImage:[[UIImage imageNamed:@"Kal.bundle/kal_left_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
   previousMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   previousMonthButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   [previousMonthButton addTarget:self action:@selector(showPreviousMonth) forControlEvents:UIControlEventTouchUpInside];
   [headerView addSubview:previousMonthButton];
   [previousMonthButton release];
-  
+
   // Draw the selected month name centered and at the top of the view
   CGRect monthLabelFrame = CGRectMake((self.width/2.0f) - (kMonthLabelWidth/2.0f),
                                       kHeaderVerticalAdjust,
@@ -124,7 +124,7 @@ extern CGSize kalTileSize();
   headerTitleLabel.shadowOffset = CGSizeMake(0.f, 1.f);
   [self setHeaderTitleText:[logic selectedMonthNameAndYear]];
   [headerView addSubview:headerTitleLabel];
-  
+
   // Create the next month button on the right side of the view
   CGRect nextMonthButtonFrame = CGRectMake(headerView.width - kChangeMonthButtonWidth,
                                            kHeaderVerticalAdjust,
@@ -132,7 +132,7 @@ extern CGSize kalTileSize();
                                            kChangeMonthButtonHeight);
   UIButton *nextMonthButton = [[UIButton alloc] initWithFrame:nextMonthButtonFrame];
   [nextMonthButton setAccessibilityLabel:NSLocalizedString(@"Next month", nil)];
-  [nextMonthButton setImage:[UIImage imageNamed:@"Kal.bundle/kal_right_arrow.png"] forState:UIControlStateNormal];
+  [nextMonthButton setImage:[[UIImage imageNamed:@"Kal.bundle/kal_right_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
   nextMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   nextMonthButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   [nextMonthButton addTarget:self action:@selector(showFollowingMonth) forControlEvents:UIControlEventTouchUpInside];
@@ -177,13 +177,13 @@ extern CGSize kalTileSize();
   tableView = [[UITableView alloc] initWithFrame:fullWidthAutomaticLayoutFrame style:UITableViewStylePlain];
   tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [contentView addSubview:tableView];
-  
+
   // Drop shadow below tile grid and over the list of events for the selected day
   shadowView = [[UIImageView alloc] initWithFrame:fullWidthAutomaticLayoutFrame];
   shadowView.image = [UIImage imageNamed:@"Kal.bundle/kal_grid_shadow.png"];
   shadowView.height = shadowView.image.size.height;
   [contentView addSubview:shadowView];
-  
+
   // Trigger the initial KVO update to finish the contentView layout
   [gridView sizeToFit];
 }
@@ -191,7 +191,7 @@ extern CGSize kalTileSize();
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
   if (object == gridView && [keyPath isEqualToString:@"frame"]) {
-    
+
     /* Animate tableView filling the remaining space after the
      * gridView expanded or contracted to fit the # of weeks
      * for the month that is being displayed.
@@ -208,10 +208,10 @@ extern CGSize kalTileSize();
     frame.size.height = tableView.superview.height - gridBottom;
     tableView.frame = frame;
     shadowView.top = gridBottom;
-    
+
   } else if ([keyPath isEqualToString:@"selectedMonthNameAndYear"]) {
     [self setHeaderTitleText:[change objectForKey:NSKeyValueChangeNewKey]];
-    
+
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
@@ -241,7 +241,7 @@ extern CGSize kalTileSize();
 {
   [logic removeObserver:self forKeyPath:@"selectedMonthNameAndYear"];
   [logic release];
-  
+
   [headerTitleLabel release];
   [gridView removeObserver:self forKeyPath:@"frame"];
   [gridView release];
