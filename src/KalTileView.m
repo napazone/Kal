@@ -3,6 +3,8 @@
  * License: http://www.opensource.org/licenses/mit-license.html
  */
 
+@import CoreText;
+
 #import "KalTileView.h"
 #import "KalDate.h"
 #import "KalPrivate.h"
@@ -30,13 +32,12 @@ extern CGSize kalTileSize();
 - (void)drawRect:(CGRect)rect
 {
   CGContextRef ctx = UIGraphicsGetCurrentContext();
-  CGFloat fontSize = 21.f;
-  UIFont *font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:fontSize];
+  CGFloat fontSize = 21.5f;
+  UIFont *font = [UIFont systemFontOfSize:fontSize];
   UIColor *textColor = nil;
   UIImage *markerImage = nil;
   UIImage *specialMarkerImage = nil;
-  CGContextSelectFont(ctx, [font.fontName cStringUsingEncoding:NSUTF8StringEncoding], fontSize, kCGEncodingMacRoman);
-      
+
   CGContextTranslateCTM(ctx, 0, kalTileSize().height);
   CGContextScaleCTM(ctx, 1, -1);
 
@@ -91,14 +92,23 @@ extern CGSize kalTileSize();
   
   NSUInteger n = [self.date day];
   NSString *dayText = [NSString stringWithFormat:@"%lu", (unsigned long)n];
-  const char *day = [dayText cStringUsingEncoding:NSUTF8StringEncoding];
   CGSize textSize = [dayText sizeWithFont:font];
   CGFloat textX, textY;
   textX = roundf(0.5f * (kalTileSize().width - textSize.width)) + horizontalOffset;
   textY = 10.f + roundf(0.5f * (kalTileSize().height - textSize.height));
   [textColor setFill];
-  CGContextShowTextAtPoint(ctx, textX, textY, day, n >= 10 ? 2 : 1);
-  
+
+  NSDictionary *attributes = @{
+    NSForegroundColorAttributeName : textColor,
+    NSFontAttributeName:font};
+
+  NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:dayText attributes:attributes];
+
+  CTLineRef displayLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attributedString);
+  CGContextSetTextPosition(ctx, textX, textY);
+  CTLineDraw(displayLine, ctx);
+  CFRelease(displayLine);
+
   if (self.highlighted) {
     [[UIColor colorWithWhite:0.25f alpha:0.3f] setFill];
     CGContextFillRect(ctx, CGRectMake(0.f, 0.f, kalTileSize().width, kalTileSize().height));
