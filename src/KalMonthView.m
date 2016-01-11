@@ -64,7 +64,7 @@ extern CGSize kalTileSize();
 - (void)drawRect:(CGRect)rect
 {
   CGContextRef ctx = UIGraphicsGetCurrentContext();
-  CGContextDrawTiledImage(ctx, (CGRect){CGPointZero,kalTileSize()}, [[UIImage imageNamed:@"Kal.bundle/kal_tile.png"] CGImage]);
+  CGContextDrawTiledImage(ctx, (CGRect){CGPointZero,kalTileSize()}, [[UIImage kal_imageNamed:@"kal_tile.png"] CGImage]);
 }
 
 - (KalTileView *)firstTileOfMonth

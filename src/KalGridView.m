@@ -77,7 +77,7 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
 - (void)drawRect:(CGRect)rect
 {
-  [[UIImage imageNamed:@"Kal.bundle/kal_grid_background.png"] drawInRect:rect];
+  [[UIImage kal_imageNamed:@"kal_grid_background.png"] drawInRect:rect];
 }
 
 - (void)sizeToFit

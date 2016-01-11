@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50BF77BB1C4462CA001F9A2A /* UIImageAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 50BF77B91C4462CA001F9A2A /* UIImageAdditions.h */; };
+		50BF77BC1C4462CA001F9A2A /* UIImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77BA1C4462CA001F9A2A /* UIImageAdditions.m */; };
 		533B287611E2D46E00B3CC07 /* Kal.h in Headers */ = {isa = PBXBuildFile; fileRef = 533B286011E2D46E00B3CC07 /* Kal.h */; };
 		533B287711E2D46E00B3CC07 /* KalDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 533B286111E2D46E00B3CC07 /* KalDataSource.h */; };
 		533B287811E2D46E00B3CC07 /* KalDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B286211E2D46E00B3CC07 /* KalDataSource.m */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50BF77B91C4462CA001F9A2A /* UIImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageAdditions.h; sourceTree = "<group>"; };
+		50BF77BA1C4462CA001F9A2A /* UIImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageAdditions.m; sourceTree = "<group>"; };
 		533B285F11E2D46E00B3CC07 /* Kal.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Kal.bundle; sourceTree = "<group>"; };
 		533B286011E2D46E00B3CC07 /* Kal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kal.h; sourceTree = SOURCE_ROOT; };
 		533B286111E2D46E00B3CC07 /* KalDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalDataSource.h; sourceTree = SOURCE_ROOT; };
@@ -141,6 +145,8 @@
 			children = (
 				533B287211E2D46E00B3CC07 /* NSDateAdditions.h */,
 				533B287311E2D46E00B3CC07 /* NSDateAdditions.m */,
+				50BF77B91C4462CA001F9A2A /* UIImageAdditions.h */,
+				50BF77BA1C4462CA001F9A2A /* UIImageAdditions.m */,
 				533B287411E2D46E00B3CC07 /* UIViewAdditions.h */,
 				533B287511E2D46E00B3CC07 /* UIViewAdditions.m */,
 			);
@@ -162,6 +168,7 @@
 				533B287D11E2D46E00B3CC07 /* KalLogic.h in Headers */,
 				533B287F11E2D46E00B3CC07 /* KalMonthView.h in Headers */,
 				533B288111E2D46E00B3CC07 /* KalPrivate.h in Headers */,
+				50BF77BB1C4462CA001F9A2A /* UIImageAdditions.h in Headers */,
 				533B288211E2D46E00B3CC07 /* KalTileView.h in Headers */,
 				533B288411E2D46E00B3CC07 /* KalView.h in Headers */,
 				533B288611E2D46E00B3CC07 /* KalViewController.h in Headers */,
@@ -223,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50BF77BC1C4462CA001F9A2A /* UIImageAdditions.m in Sources */,
 				533B287811E2D46E00B3CC07 /* KalDataSource.m in Sources */,
 				533B287A11E2D46E00B3CC07 /* KalDate.m in Sources */,
 				533B287C11E2D46E00B3CC07 /* KalGridView.m in Sources */,
