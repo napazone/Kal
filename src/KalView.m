@@ -25,14 +25,16 @@ extern CGSize kalTileSize();
 
 - (id)initWithFrame:(CGRect)frame delegate:(id<KalViewDelegate>)theDelegate logic:(KalLogic *)theLogic
 {
-  if ((self = [super initWithFrame:frame])) {
+  self = [super initWithFrame:frame];
+
+  if (self) {
     delegate = theDelegate;
     logic = [theLogic retain];
     [logic addObserver:self forKeyPath:@"selectedMonthNameAndYear" options:NSKeyValueObservingOptionNew context:NULL];
     self.autoresizesSubviews = YES;
     self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
-    UIView *backgroundView = [[UIView alloc] initWithFrame:frame];
+    UIView *backgroundView = [[[UIView alloc] initWithFrame:frame] autorelease];
     backgroundView.backgroundColor = [UIColor whiteColor];
     [self addSubview:backgroundView];
 
