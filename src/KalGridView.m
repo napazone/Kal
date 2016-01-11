@@ -236,17 +236,17 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
 - (void)animateSelectedTile
 {
-  UIView *selectedTile = [[self.selectedTile retain] autorelease];
+  UIView *aSelectedTile = [[self.selectedTile retain] autorelease];
 
   [UIView animateWithDuration:0.14 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^() {
     CATransform3D transform = CATransform3DMakeScale(1.3, 1.3, 1.0);
-    selectedTile.layer.transform = transform;
+    aSelectedTile.layer.transform = transform;
   }
   completion:^(BOOL finished) {
     CATransform3D transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
 
     [UIView animateWithDuration:0.14 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^() {
-      selectedTile.layer.transform = transform;
+      aSelectedTile.layer.transform = transform;
     }
     completion:nil];
   }];
