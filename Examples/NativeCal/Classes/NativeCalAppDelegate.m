@@ -30,7 +30,7 @@
    *    Kal Configuration
    *
    */
-  kal.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Today" style:UIBarButtonItemStyleBordered target:self action:@selector(showAndSelectToday)] autorelease];
+  kal.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Today" style:UIBarButtonItemStylePlain target:self action:@selector(showAndSelectToday)] autorelease];
   kal.delegate = self;
   dataSource = [[EventKitDataSource alloc] init];
   kal.dataSource = dataSource;

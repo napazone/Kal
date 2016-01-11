@@ -108,6 +108,11 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
   return [[self holidaysFrom:fromDate to:toDate] valueForKeyPath:@"date"];
 }
 
+- (NSSet *)markedDatesFrom:(NSDate *)fromDate to:(NSDate *)toDate speciallyMarkedDates:(NSSet **)speciallyMarkedDates
+{
+  return [NSSet set];
+}
+
 - (void)loadItemsFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate
 {
   [items addObjectsFromArray:[self holidaysFrom:fromDate to:toDate]];
