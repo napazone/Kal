@@ -86,11 +86,11 @@
   NSMutableArray *days = [NSMutableArray array];
   
   NSDate *beginningOfPreviousMonth = [self.baseDate cc_dateByMovingToFirstDayOfThePreviousMonth];
-  int n = [beginningOfPreviousMonth cc_numberOfDaysInMonth];
-  int numPartialDays = [self numberOfDaysInPreviousPartialWeek];
+  NSUInteger n = [beginningOfPreviousMonth cc_numberOfDaysInMonth];
+  NSUInteger numPartialDays = [self numberOfDaysInPreviousPartialWeek];
   NSDateComponents *c = [beginningOfPreviousMonth cc_componentsForMonthDayAndYear];
-  for (int i = n - (numPartialDays - 1); i < n + 1; i++)
-    [days addObject:[KalDate dateForDay:i month:c.month year:c.year]];
+  for (NSUInteger i = n - (numPartialDays - 1); i < n + 1; i++)
+    [days addObject:[KalDate dateForDay:(unsigned int)i month:(unsigned int)c.month year:(unsigned int)c.year]];
   
   return days;
 }
@@ -102,7 +102,7 @@
   NSUInteger numDays = [self.baseDate cc_numberOfDaysInMonth];
   NSDateComponents *c = [self.baseDate cc_componentsForMonthDayAndYear];
   for (int i = 1; i < numDays + 1; i++)
-    [days addObject:[KalDate dateForDay:i month:c.month year:c.year]];
+    [days addObject:[KalDate dateForDay:i month:(unsigned int)c.month year:(unsigned int)c.year]];
   
   return days;
 }
@@ -115,7 +115,7 @@
   NSUInteger numPartialDays = [self numberOfDaysInFollowingPartialWeek];
   
   for (int i = 1; i < numPartialDays + 1; i++)
-    [days addObject:[KalDate dateForDay:i month:c.month year:c.year]];
+    [days addObject:[KalDate dateForDay:i month:(unsigned int)c.month year:(unsigned int)c.year]];
   
   return days;
 }

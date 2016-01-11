@@ -20,7 +20,7 @@
 {
   UILabel *label = [[[UILabel alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
   label.text = [NSString stringWithFormat:@"%@ - %@", holiday.country, holiday.name];
-  label.textAlignment = UITextAlignmentCenter;
+  label.textAlignment = NSTextAlignmentCenter;
   self.view = label;
 }
 

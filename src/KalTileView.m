@@ -42,28 +42,28 @@ extern CGSize kalTileSize();
   CGContextScaleCTM(ctx, 1, -1);
 
   if ([self isToday] && self.selected) {
-    [self drawBackgroundImage:[[UIImage imageNamed:@"Kal.bundle/kal_tile_today_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
-    textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_text_fill.png"]];
-    markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_today.png"];
-    specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_today.png"];
+    [self drawBackgroundImage:[[UIImage kal_imageNamed:@"kal_tile_today_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_tile_text_fill.png"]];
+    markerImage = [UIImage kal_imageNamed:@"kal_marker_today.png"];
+    specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_today.png"];
   } else if ([self isToday] && !self.selected) {
-    [self drawBackgroundImage:[[UIImage imageNamed:@"Kal.bundle/kal_tile_today.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    [self drawBackgroundImage:[[UIImage kal_imageNamed:@"kal_tile_today.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
     textColor = [UIColor colorWithRed:0.271 green:0.655 blue:0.616 alpha:1];
-    markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_today.png"];
-    specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_today.png"];
+    markerImage = [UIImage kal_imageNamed:@"kal_marker_today.png"];
+    specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_today.png"];
   } else if (self.selected) {
-    [self drawBackgroundImage:[[UIImage imageNamed:@"Kal.bundle/kal_tile_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
-    textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_text_fill.png"]];
-    markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_selected.png"];
-    specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_selected.png"];
+    [self drawBackgroundImage:[[UIImage kal_imageNamed:@"kal_tile_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_tile_text_fill.png"]];
+    markerImage = [UIImage kal_imageNamed:@"kal_marker_selected.png"];
+    specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_selected.png"];
   } else if (self.belongsToAdjacentMonth) {
-    textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_dim_text_fill.png"]];
-    markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker_dim.png"];
-    specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker_dim.png"];
+    textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_tile_dim_text_fill.png"]];
+    markerImage = [UIImage kal_imageNamed:@"kal_marker_dim.png"];
+    specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_dim.png"];
   } else {
-    textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Kal.bundle/kal_tile_text_fill.png"]];
-    markerImage = [UIImage imageNamed:@"Kal.bundle/kal_marker.png"];
-    specialMarkerImage = [UIImage imageNamed:@"Kal.bundle/pink_kal_marker.png"];
+    textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_tile_text_fill.png"]];
+    markerImage = [UIImage kal_imageNamed:@"kal_marker.png"];
+    specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker.png"];
   }
 
   // We need to offset tile content to compensate for the workaround used in setSelected: (see below)
@@ -102,7 +102,7 @@ extern CGSize kalTileSize();
     NSForegroundColorAttributeName : textColor,
     NSFontAttributeName:font};
 
-  NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:dayText attributes:attributes];
+  NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:dayText attributes:attributes] autorelease];
 
   CTLineRef displayLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attributedString);
   CGContextSetTextPosition(ctx, textX, textY);
