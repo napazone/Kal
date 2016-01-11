@@ -102,7 +102,7 @@ extern CGSize kalTileSize();
     NSForegroundColorAttributeName : textColor,
     NSFontAttributeName:font};
 
-  NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:dayText attributes:attributes];
+  NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:dayText attributes:attributes] autorelease];
 
   CTLineRef displayLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attributedString);
   CGContextSetTextPosition(ctx, textX, textY);
