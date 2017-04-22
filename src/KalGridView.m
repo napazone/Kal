@@ -148,6 +148,9 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
   if ([hitView isKindOfClass:[KalTileView class]]) {
     KalTileView *tile = (KalTileView*)hitView;
+    if (tile.date == nil) { // The same case: https://github.com/carezone/Kal/commit/0f271210b09525c696ea080837528ef52d95e2de
+      return;
+    }
     if (tile.belongsToAdjacentMonth) {
       if ([tile.date compare:[KalDate dateFromNSDate:logic.baseDate]] == NSOrderedDescending) {
         [delegate showFollowingMonth];
