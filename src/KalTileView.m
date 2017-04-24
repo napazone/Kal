@@ -92,7 +92,7 @@ extern CGSize kalTileSize();
   
   NSUInteger n = [self.date day];
   NSString *dayText = [NSString stringWithFormat:@"%lu", (unsigned long)n];
-  CGSize textSize = [dayText sizeWithFont:font];
+  CGSize textSize = [dayText sizeWithAttributes:@{ NSFontAttributeName: font }];
   CGFloat textX, textY;
   textX = roundf(0.5f * (kalTileSize().width - textSize.width)) + horizontalOffset;
   textY = 10.f + roundf(0.5f * (kalTileSize().height - textSize.height));
