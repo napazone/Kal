@@ -17,7 +17,7 @@
 static const CGFloat kHeaderHeight = 44.f;
 static const CGFloat kMonthLabelHeight = 17.f;
 
-extern CGSize kalTileSize();
+extern CGSize kalTileSize(void);
 
 @implementation KalView
 

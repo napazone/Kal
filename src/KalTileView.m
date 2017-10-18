@@ -9,7 +9,7 @@
 #import "KalDate.h"
 #import "KalPrivate.h"
 
-extern CGSize kalTileSize();
+extern CGSize kalTileSize(void);
 
 @implementation KalTileView
 
