@@ -46,16 +46,6 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
 - (id)initWithFrame:(CGRect)frame logic:(KalLogic *)theLogic delegate:(id<KalViewDelegate>)theDelegate
 {
-  // MobileCal uses 46px wide tiles, with a 2px inner stroke
-  // along the top and right edges. Since there are 7 columns,
-  // the width needs to be 46*7 (322px). But the iPhone's screen
-  // is only 320px wide, so we need to make the
-  // frame extend just beyond the right edge of the screen
-  // to accomodate all 7 columns. The 7th day's 2px inner stroke
-  // will be clipped off the screen, but that's fine because
-  // MobileCal does the same thing.
-  frame.size.width = 7 * kalTileSize().width;
-
   if (self = [super initWithFrame:frame]) {
     self.clipsToBounds = YES;
     logic = [theLogic retain];
