@@ -23,9 +23,10 @@ extern CGSize kalTileSize(void);
     [tileAccessibilityFormatter setDateFormat:@"EEEE, MMMM d"];
     self.opaque = NO;
     self.clipsToBounds = YES;
+    CGSize tileSize = kalTileSize();
     for (int i=0; i<6; i++) {
       for (int j=0; j<7; j++) {
-        CGRect r = CGRectMake(j*kalTileSize().width, i*kalTileSize().height, kalTileSize().width, kalTileSize().height);
+        CGRect r = CGRectMake(j*tileSize.width, i*tileSize.height, tileSize.width, tileSize.height);
         [self addSubview:[[[KalTileView alloc] initWithFrame:r] autorelease]];
       }
     }

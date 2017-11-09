@@ -146,8 +146,9 @@ extern CGSize kalTileSize(void);
   NSArray *fullWeekdayNames = [[[[NSDateFormatter alloc] init] autorelease] standaloneWeekdaySymbols];
   NSUInteger firstWeekday = [[NSCalendar currentCalendar] firstWeekday];
   NSUInteger i = firstWeekday - 1;
-  for (CGFloat xOffset = 0.f; xOffset < headerView.width; xOffset += kalTileSize().width, i = (i+1)%7) {
-    CGRect weekdayFrame = CGRectMake(xOffset, 30.f, kalTileSize().width, kHeaderHeight - 29.f);
+  CGSize tileSize = kalTileSize();
+  for (CGFloat xOffset = 0.f; xOffset < headerView.width; xOffset += tileSize.width, i = (i+1)%7) {
+    CGRect weekdayFrame = CGRectMake(xOffset, 30.f, tileSize.width, kHeaderHeight - 29.f);
     UILabel *weekdayLabel = [[UILabel alloc] initWithFrame:weekdayFrame];
     weekdayLabel.backgroundColor = [UIColor clearColor];
     weekdayLabel.font = [UIFont boldSystemFontOfSize:10.0];
