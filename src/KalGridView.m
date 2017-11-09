@@ -20,18 +20,16 @@
 CGSize kalTileSize() {
   CGSize screenSize = [UIScreen mainScreen].bounds.size;
   CGFloat height = MAX(screenSize.width, screenSize.height);
+  CGFloat width = MIN(screenSize.width, screenSize.height);
 
-  // iPhone 6
-  if (height == 667) {
-    return CGSizeMake(54 , 44);
+  CGFloat tileWidth = floorf(width / 7);
+  CGFloat tileHeight = 44;
+
+  if (height >= 736) {
+    tileHeight = 50;
   }
 
-  // iPhone 6 Plus
-  if (height == 736) {
-    return CGSizeMake(59.5, 50);
-  }
-
-  return CGSizeMake(46, 44);
+  return CGSizeMake(tileWidth, tileHeight);
 }
 
 static NSString *kSlideAnimationId = @"KalSwitchMonths";
