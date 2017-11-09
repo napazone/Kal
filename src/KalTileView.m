@@ -9,8 +9,6 @@
 #import "KalDate.h"
 #import "KalPrivate.h"
 
-extern CGSize kalTileSize(void);
-
 @implementation KalTileView
 
 @synthesize date;
@@ -37,7 +35,7 @@ extern CGSize kalTileSize(void);
   UIColor *textColor = nil;
   UIImage *markerImage = nil;
   UIImage *specialMarkerImage = nil;
-  CGSize size = kalTileSize();
+  CGSize size = self.bounds.size;
 
   CGContextTranslateCTM(ctx, 0, size.height);
   CGContextScaleCTM(ctx, 1, -1);
@@ -117,7 +115,7 @@ extern CGSize kalTileSize(void);
 }
 
 - (void)drawBackgroundImage:(UIImage*)image {
-  CGSize size = kalTileSize();
+  CGSize size = self.bounds.size;
   if ([UIScreen mainScreen].scale == 2.0) {
     [image drawInRect:CGRectMake(0.5, -0.5, size.width+0.5, size.height+0.5)];
   }
@@ -131,7 +129,6 @@ extern CGSize kalTileSize(void);
   // realign to the grid
   CGRect frame = self.frame;
   frame.origin = origin;
-  frame.size = kalTileSize();
   self.frame = frame;
   
   [date release];
