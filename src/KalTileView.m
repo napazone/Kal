@@ -115,13 +115,7 @@
 }
 
 - (void)drawBackgroundImage:(UIImage*)image {
-  CGSize size = self.bounds.size;
-  if ([UIScreen mainScreen].scale == 2.0) {
-    [image drawInRect:CGRectMake(0.5, -0.5, size.width+0.5, size.height+0.5)];
-  }
-  else {
-    [image drawInRect:CGRectMake(0, -1, size.width+1, size.height+1)];
-  }
+  [image drawInRect:self.bounds];
 }
 
 - (void)resetState
@@ -157,21 +151,6 @@
   if (flags.selected == selected)
     return;
 
-  // workaround since I cannot draw outside of the frame in drawRect:
-  if (![self isToday]) {
-    CGRect rect = self.frame;
-    if (selected) {
-      rect.origin.x--;
-      rect.size.width++;
-      rect.size.height++;
-    } else {
-      rect.origin.x++;
-      rect.size.width--;
-      rect.size.height--;
-    }
-    self.frame = rect;
-  }
-  
   flags.selected = selected;
   [self setNeedsDisplay];
 }
