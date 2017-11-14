@@ -9,8 +9,6 @@
 #import "KalDate.h"
 #import "KalPrivate.h"
 
-extern CGSize kalTileSize(void);
-
 @implementation KalTileView
 
 @synthesize date;
@@ -37,8 +35,9 @@ extern CGSize kalTileSize(void);
   UIColor *textColor = nil;
   UIImage *markerImage = nil;
   UIImage *specialMarkerImage = nil;
+  CGSize size = self.bounds.size;
 
-  CGContextTranslateCTM(ctx, 0, kalTileSize().height);
+  CGContextTranslateCTM(ctx, 0, size.height);
   CGContextScaleCTM(ctx, 1, -1);
 
   if ([self isToday] && self.selected) {
@@ -72,7 +71,7 @@ extern CGSize kalTileSize(void);
     horizontalOffset = 0.0f;
   }
 
-  CGFloat x = (kalTileSize().width - 6.0) / 2.0;
+  CGFloat x = (size.width - 6.0) / 2.0;
   if ([UIScreen mainScreen].scale == 1.0) {
     x = roundf(x);
   }
@@ -94,8 +93,8 @@ extern CGSize kalTileSize(void);
   NSString *dayText = [NSString stringWithFormat:@"%lu", (unsigned long)n];
   CGSize textSize = [dayText sizeWithAttributes:@{ NSFontAttributeName: font }];
   CGFloat textX, textY;
-  textX = roundf(0.5f * (kalTileSize().width - textSize.width)) + horizontalOffset;
-  textY = 10.f + roundf(0.5f * (kalTileSize().height - textSize.height));
+  textX = roundf(0.5f * (size.width - textSize.width)) + horizontalOffset;
+  textY = 10.f + roundf(0.5f * (size.height - textSize.height));
   [textColor setFill];
 
   NSDictionary *attributes = @{
@@ -111,17 +110,12 @@ extern CGSize kalTileSize(void);
 
   if (self.highlighted) {
     [[UIColor colorWithWhite:0.25f alpha:0.3f] setFill];
-    CGContextFillRect(ctx, CGRectMake(0.f, 0.f, kalTileSize().width, kalTileSize().height));
+    CGContextFillRect(ctx, CGRectMake(0.f, 0.f, size.width, size.height));
   }
 }
 
 - (void)drawBackgroundImage:(UIImage*)image {
-  if ([UIScreen mainScreen].scale == 2.0) {
-    [image drawInRect:CGRectMake(0.5, -0.5, kalTileSize().width+0.5, kalTileSize().height+0.5)];
-  }
-  else {
-    [image drawInRect:CGRectMake(0, -1, kalTileSize().width+1, kalTileSize().height+1)];
-  }
+  [image drawInRect:self.bounds];
 }
 
 - (void)resetState
@@ -129,7 +123,6 @@ extern CGSize kalTileSize(void);
   // realign to the grid
   CGRect frame = self.frame;
   frame.origin = origin;
-  frame.size = kalTileSize();
   self.frame = frame;
   
   [date release];
@@ -158,21 +151,6 @@ extern CGSize kalTileSize(void);
   if (flags.selected == selected)
     return;
 
-  // workaround since I cannot draw outside of the frame in drawRect:
-  if (![self isToday]) {
-    CGRect rect = self.frame;
-    if (selected) {
-      rect.origin.x--;
-      rect.size.width++;
-      rect.size.height++;
-    } else {
-      rect.origin.x++;
-      rect.size.width--;
-      rect.size.height--;
-    }
-    self.frame = rect;
-  }
-  
   flags.selected = selected;
   [self setNeedsDisplay];
 }

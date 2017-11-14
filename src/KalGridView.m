@@ -20,18 +20,16 @@
 CGSize kalTileSize() {
   CGSize screenSize = [UIScreen mainScreen].bounds.size;
   CGFloat height = MAX(screenSize.width, screenSize.height);
+  CGFloat width = MIN(screenSize.width, screenSize.height);
 
-  // iPhone 6
-  if (height == 667) {
-    return CGSizeMake(54 , 44);
+  CGFloat tileWidth = floorf(width / 7);
+  CGFloat tileHeight = 44;
+
+  if (height >= 736) {
+    tileHeight = 50;
   }
 
-  // iPhone 6 Plus
-  if (height == 736) {
-    return CGSizeMake(59.5, 50);
-  }
-
-  return CGSizeMake(46, 44);
+  return CGSizeMake(tileWidth, tileHeight);
 }
 
 static NSString *kSlideAnimationId = @"KalSwitchMonths";
@@ -48,24 +46,15 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
 - (id)initWithFrame:(CGRect)frame logic:(KalLogic *)theLogic delegate:(id<KalViewDelegate>)theDelegate
 {
-  // MobileCal uses 46px wide tiles, with a 2px inner stroke
-  // along the top and right edges. Since there are 7 columns,
-  // the width needs to be 46*7 (322px). But the iPhone's screen
-  // is only 320px wide, so we need to make the
-  // frame extend just beyond the right edge of the screen
-  // to accomodate all 7 columns. The 7th day's 2px inner stroke
-  // will be clipped off the screen, but that's fine because
-  // MobileCal does the same thing.
-  frame.size.width = 7 * kalTileSize().width;
-
   if (self = [super initWithFrame:frame]) {
     self.clipsToBounds = YES;
     logic = [theLogic retain];
     delegate = theDelegate;
 
     CGRect monthRect = CGRectMake(0.f, 0.f, frame.size.width, frame.size.height);
-    frontMonthView = [[KalMonthView alloc] initWithFrame:monthRect];
-    backMonthView = [[KalMonthView alloc] initWithFrame:monthRect];
+    CGSize tileSize = kalTileSize();
+    frontMonthView = [[KalMonthView alloc] initWithFrame:monthRect tileSize:tileSize];
+    backMonthView = [[KalMonthView alloc] initWithFrame:monthRect tileSize:tileSize];
     backMonthView.hidden = YES;
     [self addSubview:backMonthView];
     [self addSubview:frontMonthView];
