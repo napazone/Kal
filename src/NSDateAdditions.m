@@ -31,6 +31,7 @@
 {
   NSDate *d = nil;
   BOOL ok = [[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitMonth startDate:&d interval:NULL forDate:self];
+#pragma unused(ok)
   NSAssert1(ok, @"Failed to calculate the first day the month based on %@", self);
   return d;
 }
