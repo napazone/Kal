@@ -47,7 +47,7 @@
     specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_today.png"];
   } else if ([self isToday] && !self.selected) {
     [self drawBackgroundImage:[[UIImage kal_imageNamed:@"kal_tile_today.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
-    textColor = [UIColor colorWithRed:0.271 green:0.655 blue:0.616 alpha:1];
+    textColor = [UIColor colorWithRed:0.20392 green:0.33333 blue:0.75294 alpha:1];
     markerImage = [UIImage kal_imageNamed:@"kal_marker_today.png"];
     specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_today.png"];
   } else if (self.selected) {
