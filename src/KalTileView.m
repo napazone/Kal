@@ -41,17 +41,20 @@
   CGContextScaleCTM(ctx, 1, -1);
 
   if ([self isToday] && self.selected) {
-    [self drawBackgroundImage:[[UIImage kal_imageNamed:@"kal_tile_today_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    UIImage *image = [[[UIImage kal_imageNamed:@"kal_tile_today_selected.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
+    [self drawBackgroundImage:image];
     textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_tile_text_fill.png"]];
     markerImage = [UIImage kal_imageNamed:@"kal_marker_today.png"];
     specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_today.png"];
   } else if ([self isToday] && !self.selected) {
-    [self drawBackgroundImage:[[UIImage kal_imageNamed:@"kal_tile_today.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    UIImage *image = [[[UIImage kal_imageNamed:@"kal_tile_today.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
+    [self drawBackgroundImage:image];
     textColor = [UIColor colorWithRed:0.20392 green:0.33333 blue:0.75294 alpha:1];
     markerImage = [UIImage kal_imageNamed:@"kal_marker_today.png"];
     specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_today.png"];
   } else if (self.selected) {
-    [self drawBackgroundImage:[[UIImage kal_imageNamed:@"kal_tile_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2]];
+    UIImage *image = [[[UIImage kal_imageNamed:@"kal_tile_selected.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
+    [self drawBackgroundImage:image];
     textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_tile_text_fill.png"]];
     markerImage = [UIImage kal_imageNamed:@"kal_marker_selected.png"];
     specialMarkerImage = [UIImage kal_imageNamed:@"pink_kal_marker_selected.png"];
@@ -115,6 +118,7 @@
 }
 
 - (void)drawBackgroundImage:(UIImage*)image {
+  [self.tintColor set];
   [image drawInRect:self.bounds];
 }
 
