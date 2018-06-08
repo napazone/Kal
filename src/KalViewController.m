@@ -211,13 +211,6 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
   [self reloadData];
 }
 
-- (void)viewDidUnload
-{
-  [super viewDidUnload];
-  [tableView release];
-  tableView = nil;
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
