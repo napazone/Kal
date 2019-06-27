@@ -121,7 +121,7 @@ extern CGSize kalTileSize(void);
   headerTitleLabel.backgroundColor = [UIColor clearColor];
   headerTitleLabel.font = [UIFont boldSystemFontOfSize:20.0];
   headerTitleLabel.textAlignment = NSTextAlignmentCenter;
-  headerTitleLabel.textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_header_text_fill.png"]];
+  headerTitleLabel.textColor = [UIColor colorWithPatternImage:[UIImage kal_imageNamed:@"kal_tile_text_fill.png"]];
   headerTitleLabel.shadowColor = [UIColor whiteColor];
   headerTitleLabel.shadowOffset = CGSizeMake(0.f, 1.f);
   [self setHeaderTitleText:[logic selectedMonthNameAndYear]];
