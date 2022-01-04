@@ -17,7 +17,7 @@
 #define SLIDE_UP 1
 #define SLIDE_DOWN 2
 
-CGSize kalTileSize() {
+CGSize kalTileSize(void) {
   CGSize screenSize = [UIScreen mainScreen].bounds.size;
   CGFloat height = MAX(screenSize.width, screenSize.height);
   CGFloat width = MIN(screenSize.width, screenSize.height);
