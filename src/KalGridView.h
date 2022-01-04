@@ -5,6 +5,8 @@
 
 #import <UIKit/UIKit.h>
 
+CGSize kalTileSize(void);
+
 @class KalTileView, KalMonthView, KalLogic, KalDate;
 @protocol KalViewDelegate;
 

@@ -17,8 +17,6 @@
 static const CGFloat kHeaderHeight = 44.f;
 static const CGFloat kMonthLabelHeight = 17.f;
 
-extern CGSize kalTileSize(void);
-
 @implementation KalView
 
 @synthesize delegate, tableView;
